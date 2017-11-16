@@ -2,7 +2,8 @@ package com.nareshit.bean;
 
 import com.google.gson.Gson;
 
-public class PatientBean {
+
+public class PatientBean{
 
 	private int id;
 	private String fname;

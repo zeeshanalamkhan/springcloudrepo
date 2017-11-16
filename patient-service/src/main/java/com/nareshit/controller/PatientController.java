@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class PatientController {
 	PropertiesUtil propsUtil;
 	
 	@RequestMapping("/getPatDetails")
-	public @ResponseBody PatientBean getPatientDetails() {
+	public ResponseEntity<PatientBean> getPatientDetails() {
 		PatientBean pat = new PatientBean();
 		pat.setFname("john");
 		pat.setLname("Kane");
@@ -34,7 +35,7 @@ public class PatientController {
 		String dateFormat = propsUtil.getValueFromKey(ServiceConstants.NOVEL_HEALTH_DATE_FORMAT);
 		System.out.println("date format is:\t"+dateFormat);
 		pat.setCreatedDate(getNovelHealthDateFromat(dateFormat));
-		return pat;
+		return new ResponseEntity<PatientBean>(pat,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/createPatient",method=RequestMethod.POST)
@@ -48,11 +49,6 @@ public class PatientController {
 		JsonObject json = new JsonObject();
 		json.addProperty("status", HttpStatus.CREATED.toString());
 		json.addProperty("patDetails", pat.toString());
-		
-		
-		
-		
-		
 		return new ResponseEntity<String>(json.toString(),HttpStatus.CREATED); 
 	}
 	
