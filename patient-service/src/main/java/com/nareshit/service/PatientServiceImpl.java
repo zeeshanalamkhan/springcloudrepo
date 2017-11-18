@@ -1,42 +1,60 @@
 package com.nareshit.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.nareshit.bean.PatientBean;
+import com.nareshit.dao.PatientDao;
 import com.nareshit.domain.Patient;
+import com.nareshit.util.ServiceUtility;
 
-//@Repository
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
-	CrudRepository<Patient, Integer> repo;
+	@Autowired
+	//CrudRepository<Patient, Integer> repo;
+	PatientDao patDao;
+	
+	
+	@Autowired
+	ServiceUtility utils;
 	
 	@Override
 	public PatientBean createPatient(PatientBean patBean) {
 		Patient pat = mapBeanToDomain(patBean);
-		pat = repo.save(pat);
+		pat = patDao.save(pat);
 		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public PatientBean updatePatient(PatientBean patBean) {
-		// TODO Auto-generated method stub
-		return null;
+		Patient pat = mapBeanToDomain(patBean);
+		pat = patDao.save(pat);
+		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public PatientBean getPatientByid(int patId) {
-		// TODO Auto-generated method stub
-		return null;
+		Patient pat = patDao.findOne(patId);
+		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public List<PatientBean> getAllPatients() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterable<Patient> iterable = patDao.findAll();
+		Iterator<Patient> it= iterable.iterator();
+		List<PatientBean> patBeanList = new ArrayList<PatientBean>();
+		while(it.hasNext()) {
+			Patient pat = it.next();
+			patBeanList.add(mapDomainToBean(pat));
+		}
+		return patBeanList;
 	}
 
 	@Override
@@ -47,18 +65,27 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public boolean deletePatient(int patId) {
-		// TODO Auto-generated method stub
-		return false;
+		patDao.delete(patId);
+		boolean isNotDeleted = patDao.exists(patId);
+		if(isNotDeleted)
+			return false;
+		return true;
 	}
 
 	@Override
 	public List<PatientBean> SearcgAllPatientsByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("name in service is:\t"+name);
+	List<Patient> patList = 	patDao.seachAllPatientsByName(name);
+	List<PatientBean> patBeanList = new ArrayList<PatientBean>();
+	for(Patient pat:patList) {
+		patBeanList.add(mapDomainToBean(pat));
+	}
+		return patBeanList;
 	}
 	
 	private Patient mapBeanToDomain(PatientBean patBean) {
 		Patient pat = new Patient();
+		
 		if(patBean.getId() >0) {
 			pat.setPatId(patBean.getId());
 		}
@@ -67,6 +94,10 @@ public class PatientServiceImpl implements PatientService {
 		}
 		if(patBean.getLname() != null && !patBean.getLname().isEmpty()) {
 			pat.setLname(patBean.getLname());
+		}
+		
+		if(patBean.getCreatedDate() != null && !patBean.getCreatedDate().isEmpty()) {
+			pat.setCreateDate(utils.getNovelHealthDateFromString(patBean.getCreatedDate()));
 		}
 		
 		
@@ -85,6 +116,9 @@ public class PatientServiceImpl implements PatientService {
 			pat.setLname(patBean.getLname());
 		}
 		
+		if(patBean.getCreateDate() != null) {
+			pat.setCreatedDate(utils.getNovelHealthDateInString(patBean.getCreateDate()));
+		}
 		
 		return pat;
 	}

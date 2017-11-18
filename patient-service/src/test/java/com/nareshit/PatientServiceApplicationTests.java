@@ -3,6 +3,7 @@ package com.nareshit;
 import java.util.Base64;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,7 @@ public class PatientServiceApplicationTests {
 	
 	
 	@Test
+	@Ignore
 	public void testGetPatDetails() {
 		RestTemplate rt = new RestTemplate();
 		
@@ -58,6 +60,7 @@ public class PatientServiceApplicationTests {
 	
 	
 	@Test
+	@Ignore
 	public void testCreatePatient() {
 RestTemplate rt = new RestTemplate();
 		

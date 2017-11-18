@@ -2,14 +2,18 @@ package com.nareshit.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +60,54 @@ public class PatientController {
 		json.addProperty("status", HttpStatus.CREATED.toString());
 		json.addProperty("patDetails", pat.toString());
 		return new ResponseEntity<String>(json.toString(),HttpStatus.CREATED); 
+	}
+	
+	
+	@RequestMapping(value="/getAllPatients")
+	public ResponseEntity<String> getAllPatients(){
+		ResponseEntity<String> respEntity = null;
+		try {
+			List<PatientBean> patBeanList = patService.getAllPatients();
+			JSONObject json = new JSONObject();
+			json.put("patList",patBeanList);
+			json.put("message", "get all patients");
+			respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.FOUND);
+		}catch (Exception e) {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("error", e.getMessage());
+				respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return respEntity;
+		
+	}
+	
+	@RequestMapping(value="/searchAllPatientsByName/{patName}")
+	public ResponseEntity<String> searchPatients(@PathVariable("patName") String patName){
+		System.out.println("pat name is:\t"+patName);
+		ResponseEntity<String> respEntity = null;
+		try {
+			List<PatientBean> patBeanList = patService.SearcgAllPatientsByName(patName);
+			JSONObject json = new JSONObject();
+			json.put("patList",patBeanList);
+			json.put("message", "get all patients");
+			respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.FOUND);
+		}catch (Exception e) {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("error", e.getMessage());
+				respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return respEntity;
+		
 	}
 	
 	private String getNovelHealthDateFromat(String format) {
