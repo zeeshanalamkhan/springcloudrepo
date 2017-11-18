@@ -5,11 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nareshit.bean.PatientBean;
 import com.nareshit.dao.PatientDao;
+import com.nareshit.dao.PatientJPARepo;
 import com.nareshit.domain.Patient;
 import com.nareshit.util.ServiceUtility;
 
@@ -19,6 +23,7 @@ public class PatientServiceImpl implements PatientService {
 
 	@Autowired
 	//CrudRepository<Patient, Integer> repo;
+	//PatientJPARepo patDao;
 	PatientDao patDao;
 	
 	
@@ -26,28 +31,30 @@ public class PatientServiceImpl implements PatientService {
 	ServiceUtility utils;
 	
 	@Override
+	
+	@Transactional(rollbackFor=Exception.class)
 	public PatientBean createPatient(PatientBean patBean) {
 		Patient pat = mapBeanToDomain(patBean);
-		pat = patDao.save(pat);
+		pat = patDao.savePatient(pat);
 		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public PatientBean updatePatient(PatientBean patBean) {
 		Patient pat = mapBeanToDomain(patBean);
-		pat = patDao.save(pat);
+		pat = patDao.updatePatient(pat);
 		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public PatientBean getPatientByid(int patId) {
-		Patient pat = patDao.findOne(patId);
+		Patient pat = patDao.getPatientById(patId);
 		return mapDomainToBean(pat);
 	}
 
 	@Override
 	public List<PatientBean> getAllPatients() {
-		Iterable<Patient> iterable = patDao.findAll();
+		Iterable<Patient> iterable = patDao.getAllPatient();
 		Iterator<Patient> it= iterable.iterator();
 		List<PatientBean> patBeanList = new ArrayList<PatientBean>();
 		while(it.hasNext()) {
@@ -60,22 +67,30 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public List<PatientBean> getAllPatients(int currPage, int noOfRecPerPage) {
 		// TODO Auto-generated method stub
-		return null;
+		Pageable page = new PageRequest(currPage, noOfRecPerPage);
+		
+		List<Patient> patList = 	patDao.getAllPatientsByPaging(currPage, noOfRecPerPage);
+		List<PatientBean> patBeanList = new ArrayList<PatientBean>();
+		for(Patient pat:patList) {
+			patBeanList.add(mapDomainToBean(pat));
+		}
+			return patBeanList;
 	}
 
 	@Override
 	public boolean deletePatient(int patId) {
-		patDao.delete(patId);
-		boolean isNotDeleted = patDao.exists(patId);
-		if(isNotDeleted)
-			return false;
-		return true;
+		patDao.deletePatinet(patId);
+		Patient pat = patDao.getPatientById(patId);
+		if(pat == null)
+			 return true;
+		
+		return false;
 	}
 
 	@Override
 	public List<PatientBean> SearcgAllPatientsByName(String name) {
 		System.out.println("name in service is:\t"+name);
-	List<Patient> patList = 	patDao.seachAllPatientsByName(name);
+	List<Patient> patList = 	patDao.searchAllPatientsByName(name);
 	List<PatientBean> patBeanList = new ArrayList<PatientBean>();
 	for(Patient pat:patList) {
 		patBeanList.add(mapDomainToBean(pat));

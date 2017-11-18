@@ -86,6 +86,33 @@ public class PatientController {
 		
 	}
 	
+	@RequestMapping(value="/getAllPatients/{currpage}/{noOfRecPage}")
+	public ResponseEntity<String> getAllPatientsByPaging(@PathVariable("currpage")int currpage,
+			@PathVariable("noOfRecPage") int noOfRecPage){
+		ResponseEntity<String> respEntity = null;
+		try {
+			System.out.println("curr page is:\t"+currpage);
+			System.out.println("no.OfRecPerPage is:\t"+noOfRecPage);
+			List<PatientBean> patBeanList = patService.getAllPatients(currpage,noOfRecPage);
+			JSONObject json = new JSONObject();
+			json.put("patList",patBeanList);
+			json.put("message", "get all patients");
+			respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.FOUND);
+		}catch (Exception e) {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("error", e.getMessage());
+				respEntity = new ResponseEntity<String>(json.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return respEntity;
+		
+	}
+	
+	
 	@RequestMapping(value="/searchAllPatientsByName/{patName}")
 	public ResponseEntity<String> searchPatients(@PathVariable("patName") String patName){
 		System.out.println("pat name is:\t"+patName);
