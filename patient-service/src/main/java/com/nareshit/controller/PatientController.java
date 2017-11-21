@@ -3,9 +3,11 @@ package com.nareshit.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.websocket.server.PathParam;
 
+//import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ import com.nareshit.util.ServiceConstants;
 @Controller
 @RequestMapping("/patientCntrl")
 public class PatientController {
-
+private static final Logger logger = Logger.getLogger(PatientController.class.getName());
 	@Autowired
 	PropertiesUtil propsUtil;
 	
@@ -115,7 +117,7 @@ public class PatientController {
 	
 	@RequestMapping(value="/searchAllPatientsByName/{patName}")
 	public ResponseEntity<String> searchPatients(@PathVariable("patName") String patName){
-		System.out.println("pat name is:\t"+patName);
+		logger.warning("pat name  in controller is:\t"+patName);
 		ResponseEntity<String> respEntity = null;
 		try {
 			List<PatientBean> patBeanList = patService.SearcgAllPatientsByName(patName);
@@ -133,6 +135,7 @@ public class PatientController {
 				e1.printStackTrace();
 			}
 		}
+		
 		return respEntity;
 		
 	}

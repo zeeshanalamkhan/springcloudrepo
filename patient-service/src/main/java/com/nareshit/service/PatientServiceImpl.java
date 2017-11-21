@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +22,14 @@ import com.nareshit.util.ServiceUtility;
 @Service
 public class PatientServiceImpl implements PatientService {
 
+	private static final Logger logger = Logger.getLogger(PatientServiceImpl.class);
 	@Autowired
 	//CrudRepository<Patient, Integer> repo;
 	//PatientJPARepo patDao;
 	PatientDao patDao;
+	
+	@Autowired
+	PatientJPARepo patJpaRepo;
 	
 	
 	@Autowired
@@ -34,6 +39,7 @@ public class PatientServiceImpl implements PatientService {
 	
 	@Transactional(rollbackFor=Exception.class)
 	public PatientBean createPatient(PatientBean patBean) {
+		logger.info("am in create Patient");
 		Patient pat = mapBeanToDomain(patBean);
 		pat = patDao.savePatient(pat);
 		return mapDomainToBean(pat);
@@ -88,13 +94,16 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public List<PatientBean> SearcgAllPatientsByName(String name) {
-		System.out.println("name in service is:\t"+name);
-	List<Patient> patList = 	patDao.searchAllPatientsByName(name);
+		//System.out.println("name in service is:\t"+name);
+		logger.info("name in service is:\t"+name);
+	List<Patient> patList = 	patJpaRepo.seachAllPatientsByName(name);
 	List<PatientBean> patBeanList = new ArrayList<PatientBean>();
 	for(Patient pat:patList) {
 		patBeanList.add(mapDomainToBean(pat));
 	}
+	
 		return patBeanList;
 	}
 	
