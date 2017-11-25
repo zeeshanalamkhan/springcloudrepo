@@ -15,10 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.nareshit.bean.PatientBean;
@@ -26,7 +29,8 @@ import com.nareshit.service.PatientService;
 import com.nareshit.util.PropertiesUtil;
 import com.nareshit.util.ServiceConstants;
 
-@Controller
+//@Controller
+@RestController
 @RequestMapping("/patientCntrl")
 public class PatientController {
 private static final Logger logger = Logger.getLogger(PatientController.class.getName());
@@ -36,11 +40,19 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 	@Autowired
 	private PatientService patService;
 	
-	@RequestMapping("/getPatDetails")
+	/*@RequestMapping("/getPatDetails")
 	public ResponseEntity<PatientBean> getPatientDetailsById(@PathParam("patId")int patId) {
 		
 		PatientBean pat = patService.getPatientByid(patId);
 		return new ResponseEntity<PatientBean>(pat,HttpStatus.OK);
+	}*/
+	
+	@RequestMapping(value="/getPatDetails/{patId}")
+
+	public PatientBean getPatientDetailsById(@PathVariable("patId")int patId) {
+		
+		PatientBean pat = patService.getPatientByid(patId);
+		return pat;
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package com.nareshit;
 
 
+import java.io.BufferedReader;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -10,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 //import org.springframework.orm.hibernate5.SpringSessionContext;
@@ -54,7 +56,10 @@ public class PatientServiceApplication implements CommandLineRunner{
 		for(Object key : props.keySet()) {
 			System.out.println("key is:\t"+key);
 			System.out.println("value is:\t"+props.get(key));
+			
+
 		}
+
 		
 		System.out.println("i am in ");
 	}

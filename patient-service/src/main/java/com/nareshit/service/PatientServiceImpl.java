@@ -53,12 +53,14 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public PatientBean getPatientByid(int patId) {
 		Patient pat = patDao.getPatientById(patId);
 		return mapDomainToBean(pat);
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)
 	public List<PatientBean> getAllPatients() {
 		Iterable<Patient> iterable = patDao.getAllPatient();
 		Iterator<Patient> it= iterable.iterator();

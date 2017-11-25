@@ -2,6 +2,7 @@ package com.nareshit.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,16 @@ public class PatientDaoImpl implements PatientDao {
 
 	@Override
 	public Patient getPatientById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session ses = sf.getCurrentSession();
+		Patient pat = (Patient)ses.get(Patient.class, id);
+		return pat;
 	}
 
 	@Override
 	public Iterable<Patient> getAllPatient() {
-		// TODO Auto-generated method stub
-		return null;
+		Session ses = sf.getCurrentSession();
+		Query q = ses.createQuery("from Patient pat");
+		return q.list();
 	}
 
 	@Override
