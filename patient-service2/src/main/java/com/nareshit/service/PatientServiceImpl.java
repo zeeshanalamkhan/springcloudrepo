@@ -16,6 +16,8 @@ import com.nareshit.bean.PatientBean;
 import com.nareshit.dao.PatientDao;
 import com.nareshit.dao.PatientJPARepo;
 import com.nareshit.domain.Patient;
+import com.nareshit.proxy.DoctorServiceProxy;
+import com.nareshit.util.DoctorServiceLocator;
 import com.nareshit.util.ServiceUtility;
 
 
@@ -27,6 +29,8 @@ public class PatientServiceImpl implements PatientService {
 	//CrudRepository<Patient, Integer> repo;
 	//PatientJPARepo patDao;
 	PatientDao patDao;
+	
+	
 	
 	@Autowired
 	PatientJPARepo patJpaRepo;
@@ -41,6 +45,9 @@ public class PatientServiceImpl implements PatientService {
 	public PatientBean createPatient(PatientBean patBean) {
 		logger.info("am in create Patient");
 		Patient pat = mapBeanToDomain(patBean);
+		//String docInfo = DoctorServiceLocator.getDoctorByName(pat.getDocInfo());
+		
+		//pat.setDocInfo(docInfo);
 		pat = patDao.savePatient(pat);
 		return mapDomainToBean(pat);
 	}
@@ -126,26 +133,33 @@ public class PatientServiceImpl implements PatientService {
 			pat.setCreateDate(utils.getNovelHealthDateFromString(patBean.getCreatedDate()));
 		}
 		
+		if(patBean.getDocInfo() != null && !patBean.getDocInfo().isEmpty()) {
+			pat.setDocInfo(patBean.getDocInfo());
+		}
+		
 		
 		return pat;
 	}
 	
-	private PatientBean mapDomainToBean(Patient patBean) {
+	private PatientBean mapDomainToBean(Patient patDomain) {
 		PatientBean pat = new PatientBean();
-		if(patBean.getPatId() >0) {
-			pat.setId(patBean.getPatId());
+		if(patDomain.getPatId() >0) {
+			pat.setId(patDomain.getPatId());
 		}
-		if(patBean.getFname() != null && !patBean.getFname().isEmpty()) {
-			pat.setFname(patBean.getFname());
+		if(patDomain.getFname() != null && !patDomain.getFname().isEmpty()) {
+			pat.setFname(patDomain.getFname());
 		}
-		if(patBean.getLname() != null && !patBean.getLname().isEmpty()) {
-			pat.setLname(patBean.getLname());
-		}
-		
-		if(patBean.getCreateDate() != null) {
-			pat.setCreatedDate(utils.getNovelHealthDateInString(patBean.getCreateDate()));
+		if(patDomain.getLname() != null && !patDomain.getLname().isEmpty()) {
+			pat.setLname(patDomain.getLname());
 		}
 		
+		if(patDomain.getCreateDate() != null) {
+			pat.setCreatedDate(utils.getNovelHealthDateInString(patDomain.getCreateDate()));
+		}
+		
+		if(patDomain.getDocInfo() != null && !patDomain.getDocInfo().isEmpty()) {
+			pat.setDocInfo(patDomain.getDocInfo());
+		}
 		return pat;
 	}
 

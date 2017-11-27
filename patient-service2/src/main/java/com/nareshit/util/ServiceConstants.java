@@ -8,6 +8,8 @@ public class ServiceConstants {
 	
 	public static final String SEARCH_PATIENT_BY_NAME = "from Patient pat where pat.fname like %"+":name"+"%";
 	
+	public static final String DOCTOR_SERVICE_BY_NAME = "http://localhost:7070/doctor-service/doctorCntrl/getDoctDetailsByName";
+	
 	public static void main(String[] args) {
 		System.out.println(System.getProperty("catalina.base"));
 		System.out.println(System.getenv("CATALINA_HOME"));

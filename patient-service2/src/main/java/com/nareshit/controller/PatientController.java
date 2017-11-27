@@ -23,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.nareshit.bean.PatientBean;
+import com.nareshit.proxy.DoctorServiceProxy;
 import com.nareshit.service.PatientService;
+import com.nareshit.util.DoctorServiceLocator;
 import com.nareshit.util.PropertiesUtil;
 import com.nareshit.util.ServiceConstants;
 
@@ -39,6 +42,9 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 	
 	@Autowired
 	private PatientService patService;
+	
+	@Autowired
+	DoctorServiceProxy proxy;
 	
 	/*@RequestMapping("/getPatDetails")
 	public ResponseEntity<PatientBean> getPatientDetailsById(@PathParam("patId")int patId) {
@@ -63,11 +69,16 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 	 * @return
 	 */
 	@RequestMapping(value="/createPatient",method=RequestMethod.POST)
-	public ResponseEntity<String> addPatient(@RequestBody PatientBean pat) {
+	public ResponseEntity<String> addPatient(@RequestBody String patJson) {
 		String dateFormat = propsUtil.getValueFromKey(ServiceConstants.NOVEL_HEALTH_DATE_FORMAT);
 		System.out.println("date format is:\t"+dateFormat);
+		 Gson gson = new Gson();
+		PatientBean pat = gson.fromJson(patJson, PatientBean.class);
 		pat.setCreatedDate(getNovelHealthDateFromat(dateFormat));
-		
+		System.out.println("doctor info is:\t"+pat.getDocInfo());
+		ResponseEntity<String> docResp = proxy.getDoctorByName(pat.getDocInfo());
+		pat.setDocInfo(docResp.getBody());
+		System.out.println("doc name is:\t"+pat.getDocInfo());
 		pat = patService.createPatient(pat);
 		
 		JsonObject json = new JsonObject();

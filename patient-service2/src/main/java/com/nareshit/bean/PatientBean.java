@@ -9,6 +9,7 @@ public class PatientBean{
 	private String fname;
 	private String lname;
 	private String createdDate;
+	private String docInfo;
 	public int getId() {
 		return id;
 	}
@@ -18,15 +19,17 @@ public class PatientBean{
 	public String getFname() {
 		return fname;
 	}
+	
 	@Override
 	public String toString() {
-		Gson gson = new Gson();
-		PatientBean patBean = new PatientBean();
-		patBean.setId(id);
-		patBean.setFname(fname);
-		patBean.setLname(lname);
-		patBean.setCreatedDate(createdDate);
-		return gson.toJson(patBean);
+		return "PatientBean [id=" + id + ", fname=" + fname + ", lname=" + lname + ", createdDate=" + createdDate
+				+ ", docInfo=" + docInfo + "]";
+	}
+	public String getDocInfo() {
+		return docInfo;
+	}
+	public void setDocInfo(String docInfo) {
+		this.docInfo = docInfo;
 	}
 	public void setFname(String fname) {
 		this.fname = fname;

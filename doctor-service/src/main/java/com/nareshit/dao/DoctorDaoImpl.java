@@ -66,4 +66,13 @@ public class DoctorDaoImpl implements DoctorDao {
 		return null;
 	}
 
+	@Override
+	public Doctor getDoctorByName(String name) {
+		System.out.println("docname is:\t"+name);
+        Session ses = sf.getCurrentSession();
+        Query q = ses.createQuery("from Doctor d where d.fname=:docName");
+        q.setParameter("docName", name);
+		return (Doctor) q.uniqueResult();
+	}
+
 }

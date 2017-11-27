@@ -148,4 +148,11 @@ public class DoctorServiceImpl implements DoctorService {
 		return pat;
 	}
 
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public DoctorBean getDoctorByName(String name) {
+		 Doctor doc = doctDao.getDoctorByName(name);
+		return mapDomainToBean(doc);
+	}
+
 }

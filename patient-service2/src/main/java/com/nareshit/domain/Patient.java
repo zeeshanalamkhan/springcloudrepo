@@ -20,13 +20,23 @@ public class Patient {
 	private String lname;
 	
 	private String userName;
+	
 	@Override
 	public String toString() {
 		return "Patient [patId=" + patId + ", fname=" + fname + ", lname=" + lname + ", userName=" + userName
-				+ ", password=" + password + ", createDate=" + createDate + ", email=" + email + ", isLocked="
-				+ isLocked + ", modifiedDate=" + modifiedDate + ", createdBy=" + createdBy + ", modifiedBy="
-				+ modifiedBy + "]";
+				+ ", docInfo=" + docInfo + ", password=" + password + ", createDate=" + createDate + ", email=" + email
+				+ ", isLocked=" + isLocked + ", modifiedDate=" + modifiedDate + ", createdBy=" + createdBy
+				+ ", modifiedBy=" + modifiedBy + "]";
 	}
+	public String getDocInfo() {
+		return docInfo;
+	}
+	public void setDocInfo(String docInfo) {
+		this.docInfo = docInfo;
+	}
+	private String docInfo;
+	
+	
 	private String password;
 	
 	@Temporal(TemporalType.TIMESTAMP)

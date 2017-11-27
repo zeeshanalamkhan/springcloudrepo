@@ -1,12 +1,25 @@
 package com.nareshit.bean;
 
+import java.io.Serializable;
 
-public class DoctorBean{
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+public class DoctorBean implements Serializable{
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4785332147957808413L;
 	private int id;
 	private String fname;
 	private String lname;
 	private String createdDate;
+	@Override
+	public String toString() {
+		return "{id=" + id + ", fname=" + fname + ", lname=" + lname + ", createdDate=" + createdDate + "}";
+	}
 	public int getId() {
 		return id;
 	}
@@ -17,10 +30,7 @@ public class DoctorBean{
 		return fname;
 	}
 	
-	@Override
-	public String toString() {
-		return "DoctorBean [id=" + id + ", fname=" + fname + ", lname=" + lname + ", createdDate=" + createdDate + "]";
-	}
+	
 	public void setFname(String fname) {
 		this.fname = fname;
 	}

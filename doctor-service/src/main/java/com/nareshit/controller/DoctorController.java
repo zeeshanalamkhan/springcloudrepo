@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.nareshit.bean.DoctorBean;
+import com.nareshit.proxy.PatientServiceProxy;
 import com.nareshit.service.DoctorService;
 import com.nareshit.util.PropertiesUtil;
 import com.nareshit.util.ServiceConstants;
@@ -36,15 +38,36 @@ public class DoctorController {
 	PropertiesUtil propsUtil;
 
 	@Autowired
-	private DoctorService patService;
+	private DoctorService docService;
 
+	
+	@Autowired
+	private PatientServiceProxy proxy;
 		
 	//@RequestMapping("/getDoctDetails")
-	@GetMapping(value="/getDoctDetails")
-	public ResponseEntity<DoctorBean> getDoctorDetailsById(@PathParam("patId") int patId) {
+	@GetMapping(value="/getDoctDetails/{docId}")
+	public ResponseEntity<DoctorBean> getDoctorDetailsById(@PathVariable("docId") int patId) {
 
-		DoctorBean pat = patService.getDoctorByid(patId);
+		DoctorBean pat = docService.getDoctorByid(patId);
 		return new ResponseEntity<DoctorBean>(pat, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getDoctDetailsByName/{docName}")
+	public ResponseEntity<String> getDoctorDetailsByName(@PathVariable("docName") String docName) {
+        System.out.println("docname is:\t"+docName);
+		JSONObject json = new JSONObject();
+        try {
+        	DoctorBean docBean =    docService.getDoctorByName(docName);
+        	Gson gson = new Gson();
+    		String docJson = gson.toJson(docBean);
+    		
+    		
+        	json.put("doctorDetails", docJson);
+        }catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return new ResponseEntity<String>(json.toString(),HttpStatus.OK);
 	}
 
 	/**
@@ -61,7 +84,7 @@ public class DoctorController {
 		System.out.println("date format is:\t" + dateFormat);
 		pat.setCreatedDate(getNovelHealthDateFromat(dateFormat));
 
-		pat = patService.createDoctor(pat);
+		pat = docService.createDoctor(pat);
 
 		JSONObject json = new JSONObject();
 		try {
@@ -80,7 +103,7 @@ public class DoctorController {
 	public ResponseEntity<String> getAllDoctors() {
 		ResponseEntity<String> respEntity = null;
 		try {
-			List<DoctorBean> patBeanList = patService.getAllDoctors();
+			List<DoctorBean> patBeanList = docService.getAllDoctors();
 			JSONObject json = new JSONObject();
 			json.put("patList", patBeanList);
 			json.put("message", "get all Doctors");
@@ -107,7 +130,7 @@ public class DoctorController {
 		try {
 			System.out.println("curr page is:\t" + currpage);
 			System.out.println("no.OfRecPerPage is:\t" + noOfRecPage);
-			List<DoctorBean> patBeanList = patService.getAllDoctors(currpage, noOfRecPage);
+			List<DoctorBean> patBeanList = docService.getAllDoctors(currpage, noOfRecPage);
 			JSONObject json = new JSONObject();
 			json.put("patList", patBeanList);
 			json.put("message", "get all Doctors");
@@ -132,7 +155,7 @@ public class DoctorController {
 		logger.warning("pat name  in controller is:\t" + patName);
 		ResponseEntity<String> respEntity = null;
 		try {
-			List<DoctorBean> patBeanList = patService.SearcgAllDoctorsByName(patName);
+			List<DoctorBean> patBeanList = docService.SearcgAllDoctorsByName(patName);
 			JSONObject json = new JSONObject();
 			json.put("patList", patBeanList);
 			json.put("message", "get all Doctors");
@@ -150,6 +173,13 @@ public class DoctorController {
 
 		return respEntity;
 
+	}
+	
+	@RequestMapping(path="/regPatient")
+	public ResponseEntity<String> regPatinet(@RequestBody String patJson){
+		System.out.println("inpu data is:\t"+patJson);
+		ResponseEntity<String> patCreatedJson = proxy.addPatient(patJson);
+		return patCreatedJson;
 	}
 
 	private String getNovelHealthDateFromat(String format) {
