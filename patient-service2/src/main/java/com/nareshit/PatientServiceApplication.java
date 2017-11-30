@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
@@ -27,6 +30,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
+@EnableCircuitBreaker
+@RefreshScope
 public class PatientServiceApplication implements CommandLineRunner{
 
 	
@@ -66,6 +71,9 @@ public class PatientServiceApplication implements CommandLineRunner{
 		System.out.println("i am in ");
 	}
 
-		
+	@Bean
+	public AlwaysSampler alwaysSampler() {
+		return new AlwaysSampler();
+	}	
 	
 }

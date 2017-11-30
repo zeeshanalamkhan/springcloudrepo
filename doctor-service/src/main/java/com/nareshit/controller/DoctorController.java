@@ -10,6 +10,9 @@ import javax.websocket.server.PathParam;
 //import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitManagementTemplate;
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nareshit.bean.DoctorBean;
+import com.nareshit.msgbroker.DoctorSourceSender;
 import com.nareshit.proxy.PatientServiceProxy;
 import com.nareshit.service.DoctorService;
 import com.nareshit.util.PropertiesUtil;
@@ -43,7 +47,17 @@ public class DoctorController {
 	
 	@Autowired
 	private PatientServiceProxy proxy;
+	
+	@Autowired
+	DoctorSourceSender sender;
+	
 		
+	@Autowired
+	//RabbitTemplate temp;
+	
+	RabbitMessagingTemplate temp;
+
+	
 	//@RequestMapping("/getDoctDetails")
 	@GetMapping(value="/getDoctDetails/{docId}")
 	public ResponseEntity<DoctorBean> getDoctorDetailsById(@PathVariable("docId") int patId) {
@@ -63,6 +77,11 @@ public class DoctorController {
     		
     		
         	json.put("doctorDetails", docJson);
+        	
+        	//temp.convertAndSend("doctorQ", json.toString());
+        	boolean isDataSent = sender.sendData(json.toString());
+        	System.out.println("is data sent to que"+isDataSent);
+        	
         }catch (Exception e) {
 			// TODO: handle exception
 		}

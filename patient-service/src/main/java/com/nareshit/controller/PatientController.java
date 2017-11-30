@@ -10,6 +10,7 @@ import javax.websocket.server.PathParam;
 //import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,8 @@ import com.nareshit.service.PatientService;
 import com.nareshit.util.DoctorServiceLocator;
 import com.nareshit.util.PropertiesUtil;
 import com.nareshit.util.ServiceConstants;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 
 //@Controller
 @RestController
@@ -45,6 +48,11 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 	
 	@Autowired
 	DoctorServiceProxy proxy;
+	
+	@Autowired
+	//RabbitTemplate temp;
+	
+	RabbitMessagingTemplate temp;
 	
 	/*@RequestMapping("/getPatDetails")
 	public ResponseEntity<PatientBean> getPatientDetailsById(@PathParam("patId")int patId) {
@@ -68,6 +76,7 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 	 * @param pat
 	 * @return
 	 */
+	@HystrixCommand(fallbackMethod="createPatient_fallback")
 	@RequestMapping(value="/createPatient",method=RequestMethod.POST)
 	public ResponseEntity<String> addPatient(@RequestBody String patJson) {
 		String dateFormat = propsUtil.getValueFromKey(ServiceConstants.NOVEL_HEALTH_DATE_FORMAT);
@@ -78,8 +87,11 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 		
 		pat.setCreatedDate(getNovelHealthDateFromat(dateFormat));
 		System.out.println("doctor info is:\t"+pat.getDocInfo());
-		ResponseEntity<String> docResp = proxy.getDoctorByName(pat.getDocInfo());
-		pat.setDocInfo(docResp.getBody());
+		/*ResponseEntity<String> docResp = proxy.getDoctorByName(pat.getDocInfo());
+		pat.setDocInfo(docResp.getBody());*/
+		
+		pat.setDocInfo(temp.receive("doctorQ").getPayload().toString());
+		
 		System.out.println("doc name is:\t"+pat.getDocInfo());
 		pat = patService.createPatient(pat);
 		
@@ -87,6 +99,13 @@ private static final Logger logger = Logger.getLogger(PatientController.class.ge
 		json.addProperty("status", HttpStatus.CREATED.toString());
 		json.addProperty("patDetails", pat.toString());
 		return new ResponseEntity<String>(json.toString(),HttpStatus.CREATED); 
+	}
+	
+	
+	public ResponseEntity<String> createPatient_fallback(@RequestBody String patJson) {
+		String status = "CIRCUIT BREAKER ENABLED!. Service is down at this momemt"+new Date()+
+				"please retry after some time";
+		return new ResponseEntity<String>(status,HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
 	
