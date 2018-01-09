@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:security="http://www.springframework.org/schema/security"
+		xmlns:ldap="http://www.springframework.org/schema/ldap"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/ldap
+		http://www.springframework.org/schema/ldap/spring-ldap.xsd
+        http://www.springframework.org/schema/security           
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee.xsd">
+        
+        <!-- <bean id="dataSrc" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        	<property name="url" value="jdbc:mysql://localhost:3306/novelhealthcare"></property>
+        	<property name="username" value="root"></property>
+        	<property name="password" value="root"></property>
+        </bean> -->
+        
+        <!-- <security:global-method-security pre-post-annotations="enabled"></security:global-method-security> -->
+        
+        <jee:jndi-lookup id="dataSrc" jndi-name="jdbc/novelhealthds"></jee:jndi-lookup>
+        
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        	<property name="dataSource" ref="dataSrc"/>
+        	<property name="hibernateProperties">
+        		<props>
+        			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+        			<prop key="hibernate.hbm2ddl.auto">update</prop>
+        			<prop key="hibernate.show_sql">true</prop>
+        			<prop key="hibernate.format_sql">true</prop>
+        			<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+        			<prop key="hibernate.cache.use_second_level_cache">true</prop>
+        			<prop key="hibernate.cache.use_query_cache">true</prop>
+        		</props>
+        	</property>
+        	<property name="packagesToScan" value="com.dotridge.domain"></property>
+        </bean>
+        <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        	<property name="basenames">
+        		<list>
+        			<value>db</value>
+        			<value>messages</value>
+        		</list>
+        	</property>
+        </bean>
+        
+        <context:component-scan base-package="com.dotridge.service,com.dotridge.dao,com.dotridge.config"/>
+        
+        <ldap:context-source url="ldap://localhost:1389" 
+        
+        username="cn=Directory Manager" 
+        password="Adance123$">
+        
+        </ldap:context-source>
+        
+        <ldap:ldap-template id="ldapTemplate"/>
+</beans>
