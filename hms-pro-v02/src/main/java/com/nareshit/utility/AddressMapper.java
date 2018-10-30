@@ -11,7 +11,7 @@ public class AddressMapper {
       address.setCountry(adBean.getCountry());
       address.setState(adBean.getState());
       address.setStreet(adBean.getStreet());
-      address.setZipcode(adBean.getZipcode());
+      address.setZipcode(adBean.getZip());
       return address;
 		
 	
@@ -23,7 +23,7 @@ public class AddressMapper {
 		addressBean.setCountry(adDomain.getCountry());
 		addressBean.setState(adDomain.getState());
 		addressBean.setStreet(adDomain.getStreet());
-		addressBean.setZipcode(adDomain.getZipcode());
+		addressBean.setZip(adDomain.getZipcode());
 	      
 	      return addressBean;
 	}

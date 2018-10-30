@@ -37,7 +37,7 @@ public class HospitalMapper {
 	
 	public static HospitalBean mapDomainToBean(Hospital hospDomain) {
 		HospitalBean hosp = new HospitalBean();
-		hosp.setHospId(hospDomain.getHospId());
+		hosp.setHospId(hospDomain.getId());
 		hosp.setEmail(hospDomain.getEmail());
 		hosp.setName(hospDomain.getName());
 		hosp.setFax(hospDomain.getFax());
