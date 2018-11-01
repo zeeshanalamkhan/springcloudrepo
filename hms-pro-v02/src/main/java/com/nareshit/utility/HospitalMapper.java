@@ -1,6 +1,7 @@
 package com.nareshit.utility;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.nareshit.bean.AddressBean;
@@ -59,5 +60,15 @@ public class HospitalMapper {
 		return hosp;
 	}
 	
+	public static List<HospitalBean> mapDomainListToBean(Iterator<Hospital> hospList){
+		List<HospitalBean> hospBeansList = null;
+		if(hospList != null) {
+			hospBeansList = new ArrayList<HospitalBean>();
+			while(hospList.hasNext()) {
+				hospBeansList.add(mapDomainToBean(hospList.next()));
+			}
+		}
+		return hospBeansList;
+	}
 		
 }
