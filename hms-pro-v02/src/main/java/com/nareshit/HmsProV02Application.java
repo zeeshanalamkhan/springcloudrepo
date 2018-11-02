@@ -12,12 +12,5 @@ public class HmsProV02Application {
 		SpringApplication.run(HmsProV02Application.class, args);
 	}
 	
-	@Bean
-	public InternalResourceViewResolver viewResolver() {
-		InternalResourceViewResolver views = new InternalResourceViewResolver();
-		views.setPrefix("/WEB-INF/views/");
-		views.setSuffix(".jsp");
-		return views;
-		
-	}
+	
 }

@@ -58,8 +58,8 @@
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for="unitPrice">Status</label>
 					<div class="col-lg-10">
-					    Active<form:radiobutton path="status"  value="Active"/>
-						InActive<form:radiobutton path="status" value="InActive"/>
+					    Active<form:radiobutton path="status"  value="true"/>
+						InActive<form:radiobutton path="status" value="false"/>
 					</div>
 				</div>
 						<div class="form-group">

@@ -37,11 +37,24 @@ public class HospitalController {
 	}
 	
 		
-	@GetMapping(value="/getHospitalPage")
+	@GetMapping(value="/addHospitalPage")
 	public String addHospotal(Model model) {
 		System.out.println("get hospital page");
 		model.addAttribute("hospBean", new HospitalBean());
 		return "addHospital";
+		
+				
+		
+	}
+	
+	@GetMapping(value="/getHospitalBoard")
+	public String getHospotalBoard(Model model) {
+		System.out.println("get hospital page");
+		model.addAttribute("hospBean", new HospitalBean());
+		Iterator<Hospital> hospDomainsList = hospRepo.findAll().iterator();
+		List<HospitalBean> hospBeanList = HospitalMapper.mapDomainListToBean(hospDomainsList);
+		model.addAttribute("hospList", hospBeanList);
+		return "hospBoard";
 				
 		
 	}
@@ -49,6 +62,7 @@ public class HospitalController {
 	@PostMapping(value="/addHospital")
 	public String addHospotal(@ModelAttribute("hospBean") HospitalBean hospBean) {
 		System.out.println("add hospital ");
+		System.out.println("hospal data is:\t"+hospBean.getStatus());
 		Hospital hosp = HospitalMapper.mapBeanToDomain(hospBean);
 		hosp = hospRepo.save(hosp);
 		hospBean = HospitalMapper.mapDomainToBean(hosp);

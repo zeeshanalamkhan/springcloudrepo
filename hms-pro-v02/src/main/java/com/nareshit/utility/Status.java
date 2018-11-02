@@ -2,8 +2,8 @@ package com.nareshit.utility;
 
 public enum Status {
 	
-	ACTIVE("active",1),
-	INACTIVE("inactive",0);
+	ACTIVE("Active",1),
+	INACTIVE("InActive",0);
 	
 	private String status;
 	private int val;

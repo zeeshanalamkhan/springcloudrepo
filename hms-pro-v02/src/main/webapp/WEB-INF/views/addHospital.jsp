@@ -8,14 +8,17 @@
 <title>Products</title>
 </head>
 <body>
-	<section>
+<div class="page-header">
+  <h1>Hospital Management <small>V02</small></h1>
+ </div> 
+	<!-- <section>
 		<div class="jumbotron">
 			<div class="container">
 				<h1>Hospital Management</h1>
 				<p>Add Hospital</p>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<section class="container">
 		<form:form method="post" action="./addHospital"   modelAttribute="hospBean" class="form-horizontal">
 			<fieldset>
@@ -47,8 +50,8 @@
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for="unitPrice">Status</label>
 					<div class="col-lg-10">
-					    Active<form:radiobutton path="status"  value="Active"/>
-						InActive<form:radiobutton path="status" value="InActive"/>
+					    Active<form:radiobutton path="status"  value="true"/>
+						InActive<form:radiobutton path="status" value="false"/>
 					</div>
 				</div>
 						<div class="form-group">

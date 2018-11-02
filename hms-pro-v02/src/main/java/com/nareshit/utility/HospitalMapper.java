@@ -13,11 +13,18 @@ public class HospitalMapper {
 
 	public static Hospital mapBeanToDomain(HospitalBean hospBean) {
 		Hospital hosp = new Hospital();
+		if(hospBean.getHospId() > 0) {
+			hosp.setId(hospBean.getHospId());
+		}
 		hosp.setEmail(hospBean.getEmail());
 		hosp.setName(hospBean.getName());
 		hosp.setFax(hospBean.getFax());
 		hosp.setPhone(hospBean.getPhone());
-		hosp.setStatus(Boolean.parseBoolean(String.valueOf(Status.getCodeByName(hospBean.getStatus()))));
+		
+		
+		
+		//hosp.setStatus(Boolean.parseBoolean(String.valueOf(Status.getCodeByName(hospBean.getStatus()))));
+		hosp.setStatus(Boolean.parseBoolean(hospBean.getStatus()));
 		
 		List<Address> addrList = null;
 		List<AddressBean> addBeansList = hospBean.getAddrInfo();
