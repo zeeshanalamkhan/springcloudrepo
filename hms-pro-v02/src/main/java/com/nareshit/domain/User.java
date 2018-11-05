@@ -11,7 +11,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable{
 
 	/**
@@ -20,7 +20,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="uid")
 	private int id;
 	@Column(name="firstname")

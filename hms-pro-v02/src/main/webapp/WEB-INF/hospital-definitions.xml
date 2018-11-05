@@ -14,4 +14,8 @@
  <definition name="hospBoard" extends="baseLayout">
    <put-attribute name="body" value="/WEB-INF/views/hospList.jsp"></put-attribute>
  </definition>
+ 
+ <definition name="addHospitalDefn" extends="baseLayout">
+ <put-attribute name="body" value="/WEB-INF/views/addHospital.jsp"></put-attribute>
+ </definition>
 </tiles-definitions>       

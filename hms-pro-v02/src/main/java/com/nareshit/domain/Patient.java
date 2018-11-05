@@ -27,9 +27,9 @@ public class Patient extends User implements Serializable {
 	@OneToMany
 	private Set<Nurse> nurses;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private Integer id;
+	/*@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;*/
 
 
 }

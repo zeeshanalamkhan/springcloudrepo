@@ -6,19 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" 	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Products</title>
+<jsp:include page="hospital/hospBodyHeader.jsp"></jsp:include>
 </head>
 <body>
-<div class="page-header">
-  <h1>Hospital Management <small>V02</small></h1>
- </div> 
-	<!-- <section>
-		<div class="jumbotron">
-			<div class="container">
-				<h1>Hospital Management</h1>
-				<p>Add Hospital</p>
-			</div>
-		</div>
-	</section> -->
 	<section class="container">
 		<form:form method="post" action="./addHospital"   modelAttribute="hospBean" class="form-horizontal">
 			<fieldset>

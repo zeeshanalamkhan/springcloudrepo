@@ -21,9 +21,9 @@ public class Nurse extends User implements Serializable {
 	
 	@ManyToOne
 	private Patient patient;
-	@Id
+	/*@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="nid")
-	private Integer id;
+	private Integer id;*/
 	
 }

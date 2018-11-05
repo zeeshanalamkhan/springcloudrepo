@@ -20,12 +20,12 @@ public class Admin extends User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+/*
 	@OneToOne
 	private Hospital hospital;
 	
 	@OneToMany
-	private Set<Doctor> doctors;
+	private Set<Doctor> doctors;*/
 	
 	
 	@Id

@@ -31,9 +31,9 @@ public class Doctor extends User implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Patient> patients;
 	
-	@Id
+	/*@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	private Integer id;*/
 
 	public List<Patient> getPatients() {
 		return patients;

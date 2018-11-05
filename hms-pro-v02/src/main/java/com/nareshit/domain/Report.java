@@ -17,9 +17,9 @@ public class Report extends User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
+	/*@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="rid")
-	private Integer id;
+	private Integer id;*/
 
 }

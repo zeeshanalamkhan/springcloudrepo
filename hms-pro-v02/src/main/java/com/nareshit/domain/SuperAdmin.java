@@ -23,10 +23,10 @@ public class SuperAdmin extends User implements Serializable {
 	@OneToMany
 	private List<Hospital> hospitals;
 	
-	@Id
+	/*@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="sid")
-	private Integer id;
+	private Integer id;*/
 
 	//setters and getters
 	
@@ -36,12 +36,7 @@ public class SuperAdmin extends User implements Serializable {
 	public void setHospitals(List<Hospital> hospitals) {
 		this.hospitals = hospitals;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 	
 	
 	
@@ -54,7 +49,6 @@ public class SuperAdmin extends User implements Serializable {
 	public SuperAdmin(List<Hospital> hospitals, Integer id) {
 		super();
 		this.hospitals = hospitals;
-		this.id = id;
 	}
 	
 	
@@ -62,7 +56,7 @@ public class SuperAdmin extends User implements Serializable {
 	//toString method
 	@Override
 	public String toString() {
-		return "SuperAdmin [hospitals=" + hospitals + ", id=" + id + "]";
+		return "SuperAdmin [hospitals=" + hospitals + ", id=" + 0 + "]";
 	}
 	
 	
