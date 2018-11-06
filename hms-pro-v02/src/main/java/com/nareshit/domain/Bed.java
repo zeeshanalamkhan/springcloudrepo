@@ -9,16 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Bed extends User implements Serializable {
+public class Bed implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/*@Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bid")
-	private Integer id;*/
-	
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

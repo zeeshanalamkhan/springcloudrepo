@@ -10,15 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name="PatientType")
-public class PatientType extends User  implements Serializable{
+public class PatientType implements Serializable{
 
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/*@Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;*/
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

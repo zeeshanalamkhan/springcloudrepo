@@ -19,13 +19,6 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public Doctor addDoctor(Doctor doct) {
 		Session ses = sf.openSession();
-		
-		User user =  new User();
-		
-		user.setFname("ram123");
-		user.setLname("john");
-		
-		ses.save(user);
 		ses.save(doct);
 		ses.beginTransaction().commit();
 		return doct;

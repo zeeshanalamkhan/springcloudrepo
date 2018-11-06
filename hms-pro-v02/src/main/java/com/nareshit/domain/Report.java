@@ -11,15 +11,21 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Report")
-public class Report extends User implements Serializable {
+public class Report implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/*@Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="rid")
-	private Integer id;*/
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

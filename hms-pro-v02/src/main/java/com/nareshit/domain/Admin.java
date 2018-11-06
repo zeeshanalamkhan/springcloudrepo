@@ -10,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ADMIN")
+@PrimaryKeyJoinColumn(name="profile_id")
 public class Admin extends User implements Serializable {
 
 	/**

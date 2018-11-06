@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="SuperAdmin")
+@PrimaryKeyJoinColumn(name="profile_id")
 public class SuperAdmin extends User implements Serializable {
 
 	/**

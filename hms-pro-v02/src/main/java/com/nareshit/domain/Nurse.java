@@ -8,7 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
+@PrimaryKeyJoinColumn(name="profile_id")
 public class Nurse extends User implements Serializable {
 	
 	/**

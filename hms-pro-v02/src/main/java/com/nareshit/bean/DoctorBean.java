@@ -13,10 +13,43 @@ public class DoctorBean extends UserBean implements Serializable {
 	
 	private List<PatientBean> pinfo;
 
+	private String experience;
+	public String getExperience() {
+		return experience;
+	}
+
+
+	public void setExperience(String experience) {
+		this.experience = experience;
+	}
+
+
+	public List<String> getSpecialization() {
+		return specialization;
+	}
+
+
+	public void setSpecialization(List<String> specialization) {
+		this.specialization = specialization;
+	}
+
+
+	private List<String> specialization;
+	private String specialist;
 
 	
 	//setters and gettters
 	
+	public String getSpecialist() {
+		return specialist;
+	}
+
+
+	public void setSpecialist(String specialist) {
+		this.specialist = specialist;
+	}
+
+
 	public List<PatientBean> getPinfo() {
 		return pinfo;
 	}

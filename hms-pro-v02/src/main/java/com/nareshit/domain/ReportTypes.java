@@ -9,15 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ReportTypes extends User implements Serializable {
+public class ReportTypes implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/*@Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="rtid")
-	private Integer id;*/
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }
