@@ -1,6 +1,5 @@
 package com.nareshit.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,36 +11,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nareshit.bean.DoctorBean;
-import com.nareshit.bean.HospitalBean;
 import com.nareshit.domain.Doctor;
-import com.nareshit.domain.Hospital;
 import com.nareshit.service.DoctorService;
 import com.nareshit.utility.DoctorMapper;
-import com.nareshit.utility.HospitalMapper;
+
 
 //@RestController
 @Controller
-@RequestMapping("/doctor")
-public class DoctorController {
+@RequestMapping("/admin")
+public class AdminController {
 
 	@Autowired
 	private DoctorService doctorService;
 	
 	@RequestMapping
-	public String getDocorBoard() {
-		return "doctBoard";
+	public String getAdminBoard(Model model) {
+		List<DoctorBean> docBeanList = doctorService.getAllDoctors();
+		model.addAttribute("docBeanList", docBeanList);
+		return "adminBoard";
 				
 	}
 	
-	@GetMapping(value="/addDoctorDefn")
-	public String addHospotal(Model model) {
-		System.out.println("get doctor page");
-		model.addAttribute("doctBean", new DoctorBean());
-		return "addDoctorDefn";
+	@RequestMapping(value="/doctorMgmt")
+	public String getDoctorBoard(Model model) {
+		List<DoctorBean> docBeanList = doctorService.getAllDoctors();
+		model.addAttribute("docBeanList", docBeanList);
+		return "adminBoard";
 	}
 	
-
-	@PostMapping(value="/addDoctor")
+	@RequestMapping(value="/doctorMgmt/addDoctorDefn")
+	public String addDoctorByAdmin(Model model) {
+		System.out.println("get doctor page in admin");
+		model.addAttribute("doctBean", new DoctorBean());
+		return "addDoctorDefnByAdmin";
+	}
+	
+	@RequestMapping(value="/doctorMgmt/addDoctor")
 	public String addHospotal(@ModelAttribute("doctBean") DoctorBean doctBean, Model model) {
 		System.out.println("add hospital ");
 		System.out.println("hospal data is:\t"+doctBean.getStatus());
@@ -52,7 +57,7 @@ public class DoctorController {
 			List<DoctorBean> docBeanList = doctorService.getAllDoctors();
 			model.addAttribute("docBeanList", docBeanList);
 		}
-		return "doctBoard";
+		return "adminBoard";
 	}
 	
 	

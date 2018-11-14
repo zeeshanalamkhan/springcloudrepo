@@ -8,7 +8,7 @@
 <link rel="stylesheet"
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Insert title here</title>
-<jsp:include page="./doctBodyHeader.jsp"></jsp:include>
+<jsp:include page="./adminBodyHeader.jsp"></jsp:include>
 </head>
 <script type="text/javascript">
   function deleteHosp(id){
@@ -41,27 +41,28 @@
 
 	<section class="container">
 
-	<div class="row">
-		<c:forEach items="${docBeanList}" var="docBean">
+	<%-- <div class="row">
+		<c:forEach items="${hospList}" var="hospBean">
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					<img alt="" src="" />
 					<div class="caption">
-						<p>First Name:</p>
-						<h1>${docBean.fname}</h1>
-						<p>Last Name:</p>
-						<h6>${docBean.lname}</h6>
+						<p>Name:</p>
+						<h1>${hospBean.name}</h1>
 						<p>Email:</p>
-						<h6>${docBean.email}</h6>
-						<p>Mobile:</p>
-						<h6>${docBean.mobile}</h6>
+						<h6>${hospBean.email}</h6>
+						<p>Fax:</p>
+						<h6>${hospBean.fax}</h6>
+						<p>Phone:</p>
+						<h6>${hospBean.phone}</h6>
 						<p>Status:</p>
-						<h6>${docBean.status}</h6>
+						<h6>${hospBean.status}</h6>
 						<p>
 							<a
 								href="${pageContext.request.contextPath}/hospital/editHosp/${hospBean.hospId}"
 								class="btn btn-primary" role="button">Edit</a>
 
+							<a href="${pageContext.request.contextPath}/hospital/deleteHosp/${hospBean.hospId}" class="btn btn-danger" role="button">Delete</a></p>
 							<a href="" class="btn btn-danger"
 								onclick="deleteHosp(${hospBean.hospId})" role="button">Delete</a>
 						</p>
@@ -69,7 +70,7 @@
 				</div>
 			</div>
 		</c:forEach>
-	</div>
+	</div> --%>
 
 	</section>
 

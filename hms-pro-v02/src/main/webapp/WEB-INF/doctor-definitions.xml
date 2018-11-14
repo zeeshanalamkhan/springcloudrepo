@@ -15,7 +15,7 @@
    <put-attribute name="body" value="/WEB-INF/views/doctor/doctorsList.jsp"></put-attribute>
  </definition>
  
-<!--  <definition name="adddoctorDefn" extends="baseLayout">
- <put-attribute name="body" value="/WEB-INF/views/addDoctor.jsp"></put-attribute>
- </definition> -->
+ <definition name="addDoctorDefn" extends="baseLayout">
+ <put-attribute name="body" value="/WEB-INF/views/doctor/addDoctor.jsp"></put-attribute>
+ </definition>
 </tiles-definitions>       

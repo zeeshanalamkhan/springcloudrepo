@@ -8,7 +8,7 @@
 <link rel="stylesheet"
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <title>Insert title here</title>
-<jsp:include page="./doctBodyHeader.jsp"></jsp:include>
+<jsp:include page="./adminBodyHeader.jsp"></jsp:include>
 </head>
 <script type="text/javascript">
   function deleteHosp(id){

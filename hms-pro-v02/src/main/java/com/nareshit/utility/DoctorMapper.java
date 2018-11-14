@@ -16,6 +16,9 @@ public class DoctorMapper {
 		if(doctBean.getId() > 0) {
 			doct.setId(doctBean.getId());
 		}
+		
+		doct.setPassword(doctBean.getPassword());
+		doct.setConpassword(doctBean.getCpassword());
 		doct.setEmail(doctBean.getEmail());
 		doct.setFname(doctBean.getFname());
 		doct.setMobile(doctBean.getMobile());

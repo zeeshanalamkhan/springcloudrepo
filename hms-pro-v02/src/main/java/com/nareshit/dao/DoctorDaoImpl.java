@@ -2,6 +2,7 @@ package com.nareshit.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		Session ses = sf.openSession();
 		ses.save(doct);
 		ses.beginTransaction().commit();
+		ses.close();
 		return doct;
 	}
 
@@ -32,8 +34,10 @@ public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
 	public List<Doctor> getAllDoctors() {
-		// TODO Auto-generated method stub
-		return null;
+		Session ses = sf.openSession();
+		String getAllDoctors = "from Doctor d";
+		Query q = ses.createQuery(getAllDoctors);
+		return q.list();		
 	}
 
 	@Override

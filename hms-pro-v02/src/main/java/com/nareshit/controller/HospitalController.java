@@ -46,9 +46,6 @@ public class HospitalController {
 		System.out.println("get hospital page");
 		model.addAttribute("hospBean", new HospitalBean());
 		return "addHospital";
-		
-				
-		
 	}
 	
 	@GetMapping(value="/addHospitalDefn")

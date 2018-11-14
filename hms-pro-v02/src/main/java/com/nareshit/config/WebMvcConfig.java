@@ -33,8 +33,10 @@ public class WebMvcConfig {
 	@Bean
 	public TilesConfigurer  tilesConfigurer() {
 		TilesConfigurer tilesConfig = new TilesConfigurer();
-		String[] definitions = new String[] {"/WEB-INF/hospital-definitions.xml",
-				"/WEB-INF/doctor-definitions.xml"};
+		String[] definitions = new String[] {
+				"/WEB-INF/hospital-definitions.xml",
+				"/WEB-INF/doctor-definitions.xml",
+				"/WEB-INF/admin-definitions.xml"};
 		tilesConfig.setDefinitions(definitions);
 		return tilesConfig;
 		

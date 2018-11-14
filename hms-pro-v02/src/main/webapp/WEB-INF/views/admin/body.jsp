@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <button type="button" class="btn btn-link">Patients</button></br>
-  <button type="button" class="btn btn-link">Patients</button></br>
-  <button type="button" class="btn btn-link">Patients</button></br>
-  <button type="button" class="btn btn-link">Patients</button>
+  this is footer
 </body>
 </html>
