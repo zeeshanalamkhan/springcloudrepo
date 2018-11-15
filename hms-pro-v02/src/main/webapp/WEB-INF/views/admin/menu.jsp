@@ -8,7 +8,10 @@
 </head>
 <body>
   <a href="${pageContext.request.contextPath}/admin/doctorMgmt"><button type="button" class="btn btn-link">Doctor Management</button></a></br>
-  <button type="button" class="btn btn-link">Patient Management</button></br>
+  <a href="${pageContext.request.contextPath}/admin/patientMgmt">
+  <button type="button" class="btn btn-link">Patient Management</button>
+  </a>
+  </br>
   <button type="button" class="btn btn-link">Nurse Management</button></br>
   <button type="button" class="btn btn-link">Pharmasist Management</button>
 </body>

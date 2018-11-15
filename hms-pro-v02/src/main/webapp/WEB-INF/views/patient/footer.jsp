@@ -21,24 +21,6 @@
       </button>
       <a class="navbar-brand" href="#">HmsPro-V02</a>
     </div>
-
-	<div class="page-header">
-			<h1>Welcome to Admin Board</h1>
-		</div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-      <image src="" class="glyphicon glyphicon-user">
-        <select name="searchOption" class="btn btn-default">
-        <option></option>
-    <option>View profile</option>
-    <option>update profile</option>
-    <option>Logout</option>
-  </select>
-  </image>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
 </nav>
 </body>
 </html>

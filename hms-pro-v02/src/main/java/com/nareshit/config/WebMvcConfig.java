@@ -36,7 +36,8 @@ public class WebMvcConfig {
 		String[] definitions = new String[] {
 				"/WEB-INF/hospital-definitions.xml",
 				"/WEB-INF/doctor-definitions.xml",
-				"/WEB-INF/admin-definitions.xml"};
+				"/WEB-INF/admin-definitions.xml",
+				"/WEB-INF/patient-definitions.xml"};
 		tilesConfig.setDefinitions(definitions);
 		return tilesConfig;
 		
